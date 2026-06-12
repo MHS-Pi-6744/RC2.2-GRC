@@ -1,5 +1,11 @@
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Amps;
+
+import com.ctre.phoenix6.configs.TalonFXSConfiguration;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.config.AbsoluteEncoderConfig;
 import com.revrobotics.spark.config.MAXMotionConfig.MAXMotionPositionMode;
@@ -69,7 +75,7 @@ public final class Configs {
 
   public static final class IntakeConfigs {
     public static final SparkMaxConfig intakeConfig = new SparkMaxConfig();
-    public static final SparkMaxConfig pivotConfig = new SparkMaxConfig();
+    public static final TalonFXSConfiguration pivotConfig = new TalonFXSConfiguration();
 
     static {
       // Configure basic settings of the intake motor
@@ -80,30 +86,29 @@ public final class Configs {
           .smartCurrentLimit(40);
 
       pivotConfig
-          .idleMode(PivotSetPoints.kIdleMode)
-          .smartCurrentLimit(PivotSetPoints.kCurrentLimit)
-          .inverted(false);
-      pivotConfig
-          .absoluteEncoder
-          .inverted(true)
-          .zeroOffset(PivotSetPoints.kZeroOffest)
-          .zeroCentered(false)
-          .positionConversionFactor(PivotSetPoints.kPositionConversionFactorAbs) // Deg
-          .velocityConversionFactor(PivotSetPoints.kVelocityConversionFactorAbs); // Deg/min
-      pivotConfig
-          .encoder
-          .positionConversionFactor(PivotSetPoints.kPositionConversionFactorRel) // Deg
-          .velocityConversionFactor(PivotSetPoints.kVelocityConversionFactorRel); // Deg/min
-      pivotConfig
-          .closedLoop
-          .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
-          .pid(PivotSetPoints.kP, PivotSetPoints.kI, PivotSetPoints.kD)
-          .outputRange(-1, 1)
-          .maxMotion
-          .cruiseVelocity(PivotSetPoints.kMaxVelocity)
-          .maxAcceleration(PivotSetPoints.kMaxAcceleration)
-          .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal)
-          .allowedProfileError(PivotSetPoints.kPositionTolerance);
+          .withMotorOutput(
+              new MotorOutputConfigs()
+                  .withNeutralMode(PivotSetPoints.kIdleMode)
+          )
+          .withCurrentLimits(
+              new CurrentLimitsConfigs()
+                  .withStatorCurrentLimit(Amps.of(40))
+                  .withStatorCurrentLimitEnable(true) 
+          );
+      var pivotSlot0Configs = pivotConfig.Slot0;
+      pivotSlot0Configs.kS = 0.0;
+      pivotSlot0Configs.kV = 0.0;
+      pivotSlot0Configs.kA = 0.0;
+      pivotSlot0Configs.kI = 0.0;
+      pivotSlot0Configs.kD = 0.0;
+      pivotSlot0Configs.kP = 0.5;
+
+      var motionMagicConfigs = pivotConfig.MotionMagic;
+      motionMagicConfigs.MotionMagicCruiseVelocity = 80;
+      motionMagicConfigs.MotionMagicAcceleration = 160;
+      motionMagicConfigs.MotionMagicJerk = 200;
+
+      pivotConfig.Feedback.withRemoteCANcoder(new CANcoder(Constants.canIDs.kAbsEncoderCanId));
     }
   }
 }

@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
 import java.util.List;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import org.photonvision.targeting.TargetCorner;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -51,10 +52,16 @@ public final class Constants {
     public static final int kIntakeMotorCanId = 13;
 
     /**
-     * @apiNote SPARKmax -
+     * @apiNote Talon FXS -
      * @apiNote This is the Pivot Motor of Intake Can ID
      */
-    public static final int kPivotMotorCanId = 14;
+    public static final int kPivotMotorCanId = 0;
+
+    /**
+     * @apiNote CANcoder -
+     * @apiNote This is the AbsEncoder for the Pivot Can ID
+     */
+    public static final int kAbsEncoderCanId = 1;
 
     /**
      * @apiNote SPARKmax -
@@ -91,7 +98,7 @@ public final class Constants {
           360; // Encoder rotation to Pivot Deg
       public static final double kVelocityConversionFactorAbs = 360; // Encoder RPM to Pivot Deg/min
 
-      public static final IdleMode kIdleMode = IdleMode.kCoast;
+      public static final NeutralModeValue kIdleMode = NeutralModeValue.Brake;
 
       public static final double kMaxVelocity = 24000; // degrees per min
       public static final double kMaxAcceleration = 16200; // Units deg/min/sec

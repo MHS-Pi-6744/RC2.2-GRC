@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.hardware.TalonFXS;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.PersistMode;
 import com.revrobotics.RelativeEncoder;
@@ -11,13 +12,13 @@ import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Configs;
+import frc.robot.Configs.IntakeConfigs;
 import frc.robot.Constants.IntakeConstants.PivotSetPoints;
 import frc.robot.Constants.canIDs;
 
 public class PivotSubsystem extends SubsystemBase {
 
-  private SparkMax m_pivotMotor = new SparkMax(canIDs.kPivotMotorCanId, MotorType.kBrushless);
+  private TalonFXS m_otorCont;
 
   private RelativeEncoder re_pivotMotor;
   private AbsoluteEncoder ae_pivotMotor;
@@ -36,10 +37,7 @@ public class PivotSubsystem extends SubsystemBase {
      * mid-operation.
      */
 
-    m_pivotMotor.configure(
-        Configs.IntakeConfigs.pivotConfig,
-        ResetMode.kResetSafeParameters,
-        PersistMode.kPersistParameters);
+    m_otorCont.getConfigurator().apply(IntakeConfigs.pivotConfig);
 
     p_pivotMotor = m_pivotMotor.getClosedLoopController();
 
