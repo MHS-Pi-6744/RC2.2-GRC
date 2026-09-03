@@ -4,9 +4,9 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.path.PathConstraints;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.Matrix;
@@ -26,7 +26,6 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
 import java.util.List;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import org.photonvision.targeting.TargetCorner;
-import com.ctre.phoenix6.signals.NeutralModeValue;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -83,31 +82,22 @@ public final class Constants {
 
       public static final double kStartPosition = 7; // to stay away from zero encoder reading
       public static final double kMiddlePosition = 40;
-      public static final double kEndPosition = 103;
+      public static final double kEndPosition = 93.3;
 
       public static final int kCurrentLimit = 40;
 
       public static final double kZeroOffest = .686; // units? For stationary testbed motor
 
       public static final double kPositionConversionFactorRel =
-          360 / 40.91; // Motor Rotation to Pivot Deg
+          360; // Motor Rotation to Pivot Deg
       public static final double kVelocityConversionFactorRel =
-          360 / 40.91; // Motor RPM to Pivot Deg/min
+          360; // Motor RPM to Pivot Deg/min
 
       public static final double kPositionConversionFactorAbs =
           360; // Encoder rotation to Pivot Deg
       public static final double kVelocityConversionFactorAbs = 360; // Encoder RPM to Pivot Deg/min
 
       public static final NeutralModeValue kIdleMode = NeutralModeValue.Brake;
-
-      public static final double kMaxVelocity = 24000; // degrees per min
-      public static final double kMaxAcceleration = 16200; // Units deg/min/sec
-      public static final double kPositionTolerance = 25; // Units deg
-
-      // PID gains ======== Will need to be tuned when operating on the climber -Sr
-      public static final double kP = 0.00750000;
-      public static final double kI = 0.00000000;
-      public static final double kD = 0.00000000;
 
       // MAYBE LATER!
       // The pivot is expected to have hard stops

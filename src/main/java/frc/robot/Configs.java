@@ -2,16 +2,17 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.Amps;
 
-import com.ctre.phoenix6.configs.TalonFXSConfiguration;
-import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
+import com.ctre.phoenix6.configs.TalonFXSConfiguration;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.MotorArrangementValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.config.AbsoluteEncoderConfig;
-import com.revrobotics.spark.config.MAXMotionConfig.MAXMotionPositionMode;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import frc.robot.Constants.IntakeConstants.PivotSetPoints;
 import frc.robot.Constants.ModuleConstants;
 
 public final class Configs {
@@ -78,37 +79,43 @@ public final class Configs {
     public static final TalonFXSConfiguration pivotConfig = new TalonFXSConfiguration();
 
     static {
-      // Configure basic settings of the intake motor
-      intakeConfig
-          .inverted(true)
-          .idleMode(IdleMode.kCoast)
-          .openLoopRampRate(0.5)
-          .smartCurrentLimit(40);
+      	// Configure basic settings of the intake motor
+      	intakeConfig
+        	.inverted(true)
+          	.idleMode(IdleMode.kCoast)
+          	.openLoopRampRate(0.5)
+          	.smartCurrentLimit(40);
+		
 
-      pivotConfig
-          .withMotorOutput(
-              new MotorOutputConfigs()
-                  .withNeutralMode(PivotSetPoints.kIdleMode)
-          )
-          .withCurrentLimits(
-              new CurrentLimitsConfigs()
-                  .withStatorCurrentLimit(Amps.of(40))
-                  .withStatorCurrentLimitEnable(true) 
-          );
-      var pivotSlot0Configs = pivotConfig.Slot0;
-      pivotSlot0Configs.kS = 0.0;
-      pivotSlot0Configs.kV = 0.0;
-      pivotSlot0Configs.kA = 0.0;
-      pivotSlot0Configs.kI = 0.0;
-      pivotSlot0Configs.kD = 0.0;
-      pivotSlot0Configs.kP = 0.5;
+		pivotConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
-      var motionMagicConfigs = pivotConfig.MotionMagic;
-      motionMagicConfigs.MotionMagicCruiseVelocity = 80;
-      motionMagicConfigs.MotionMagicAcceleration = 160;
-      motionMagicConfigs.MotionMagicJerk = 200;
+		pivotConfig
+		.withMotorOutput(
+            new MotorOutputConfigs()
+                .withNeutralMode(NeutralModeValue.Brake)
+        )
+        .withCurrentLimits(
+            new CurrentLimitsConfigs()
+                .withStatorCurrentLimit(Amps.of(40))
+                .withStatorCurrentLimitEnable(true)
+        );
+ 
+        var slot0Configs = pivotConfig.Slot0;
+        slot0Configs.kS = 0.0;
+        slot0Configs.kV = 0.0;
+        slot0Configs.kA = 0.0;
+        slot0Configs.kP = 1.5;
+        slot0Configs.kI = 0;
+        slot0Configs.kD = 0.0;
 
-      pivotConfig.Feedback.withRemoteCANcoder(new CANcoder(Constants.canIDs.kAbsEncoderCanId));
+        var motionMagicConfigs = pivotConfig.MotionMagic;
+        motionMagicConfigs.MotionMagicCruiseVelocity = 80;
+        motionMagicConfigs.MotionMagicAcceleration = 160;
+        motionMagicConfigs.MotionMagicJerk = 200;
+
+        pivotConfig.ExternalFeedback.withRemoteCANcoder(new CANcoder(1));
+
+        pivotConfig.Commutation.MotorArrangement = MotorArrangementValue.NEO_JST;
     }
   }
 }
