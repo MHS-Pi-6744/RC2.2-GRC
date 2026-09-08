@@ -79,43 +79,38 @@ public final class Configs {
     public static final TalonFXSConfiguration pivotConfig = new TalonFXSConfiguration();
 
     static {
-      	// Configure basic settings of the intake motor
-      	intakeConfig
-        	.inverted(true)
-          	.idleMode(IdleMode.kCoast)
-          	.openLoopRampRate(0.5)
-          	.smartCurrentLimit(40);
-		
+      // Configure basic settings of the intake motor
+      intakeConfig
+          .inverted(true)
+          .idleMode(IdleMode.kCoast)
+          .openLoopRampRate(0.5)
+          .smartCurrentLimit(40);
 
-		pivotConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+      pivotConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
-		pivotConfig
-		.withMotorOutput(
-            new MotorOutputConfigs()
-                .withNeutralMode(NeutralModeValue.Brake)
-        )
-        .withCurrentLimits(
-            new CurrentLimitsConfigs()
-                .withStatorCurrentLimit(Amps.of(40))
-                .withStatorCurrentLimitEnable(true)
-        );
- 
-        var slot0Configs = pivotConfig.Slot0;
-        slot0Configs.kS = 0.0;
-        slot0Configs.kV = 0.0;
-        slot0Configs.kA = 0.0;
-        slot0Configs.kP = 1.5;
-        slot0Configs.kI = 0;
-        slot0Configs.kD = 0.0;
+      pivotConfig
+          .withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake))
+          .withCurrentLimits(
+              new CurrentLimitsConfigs()
+                  .withStatorCurrentLimit(Amps.of(40))
+                  .withStatorCurrentLimitEnable(true));
 
-        var motionMagicConfigs = pivotConfig.MotionMagic;
-        motionMagicConfigs.MotionMagicCruiseVelocity = 80;
-        motionMagicConfigs.MotionMagicAcceleration = 160;
-        motionMagicConfigs.MotionMagicJerk = 200;
+      var slot0Configs = pivotConfig.Slot0;
+      slot0Configs.kS = 0.0;
+      slot0Configs.kV = 0.0;
+      slot0Configs.kA = 0.0;
+      slot0Configs.kP = 1.5;
+      slot0Configs.kI = 0;
+      slot0Configs.kD = 0.0;
 
-        pivotConfig.ExternalFeedback.withRemoteCANcoder(new CANcoder(1));
+      var motionMagicConfigs = pivotConfig.MotionMagic;
+      motionMagicConfigs.MotionMagicCruiseVelocity = 80;
+      motionMagicConfigs.MotionMagicAcceleration = 160;
+      motionMagicConfigs.MotionMagicJerk = 200;
 
-        pivotConfig.Commutation.MotorArrangement = MotorArrangementValue.NEO_JST;
+      pivotConfig.ExternalFeedback.withRemoteCANcoder(new CANcoder(1));
+
+      pivotConfig.Commutation.MotorArrangement = MotorArrangementValue.NEO_JST;
     }
   }
 }

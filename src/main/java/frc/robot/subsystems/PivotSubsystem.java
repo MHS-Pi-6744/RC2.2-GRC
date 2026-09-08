@@ -1,38 +1,35 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-
-import frc.robot.motor_ctl.TalonFXSMotorController;
-import frc.robot.Constants.canIDs;
-import frc.robot.Constants.IntakeConstants.PivotSetPoints;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs.IntakeConfigs;
+import frc.robot.Constants.IntakeConstants.PivotSetPoints;
+import frc.robot.Constants.canIDs;
+import frc.robot.motor_ctl.TalonFXSMotorController;
 
 public class PivotSubsystem extends SubsystemBase {
-	private TalonFXSMotorController controller = new TalonFXSMotorController(canIDs.kPivotMotorCanId, IntakeConfigs.pivotConfig);
+  private TalonFXSMotorController controller =
+      new TalonFXSMotorController(canIDs.kPivotMotorCanId, IntakeConfigs.pivotConfig);
 
-	public PivotSubsystem()
-	{
-		setTargetPosition(PivotSetPoints.kStartPosition);
-	}
+  public PivotSubsystem() {
+    setTargetPosition(PivotSetPoints.kStartPosition);
+  }
 
-	public Command setTargetPosition(double pos) {
-		return runOnce(
-			() -> controller.M_Move(pos)
-		);
-	}
+  /*
+   * @apiNote this uses Deg
+   */
+  public Command setTargetPosition(double pos) {
+    return runOnce(() -> controller.M_Move(pos / PivotSetPoints.kPositionConversionFactorAbs));
+  }
 
-	public Command clearFaults() {
-		return runOnce(
-			() -> controller.clearFaults()
-		);
-	}
+  public Command clearFaults() {
+    return runOnce(() -> controller.clearFaults());
+  }
 
-	@Override
-    public void periodic()
-    {
-        SmartDashboard.putNumber("Pivot/" + "Motor Velocity", controller.getVelocity());
-        SmartDashboard.putNumber("Pivot/" + "Motor Position", controller.getPosition());
-    }
+  @Override
+  public void periodic() {
+    SmartDashboard.putNumber("Pivot/" + "Motor Velocity", controller.getVelocity());
+    SmartDashboard.putNumber("Pivot/" + "Motor Position", controller.getPosition());
+  }
 }

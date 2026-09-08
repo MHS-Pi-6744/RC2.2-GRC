@@ -88,13 +88,11 @@ public final class Constants {
 
       public static final double kZeroOffest = .686; // units? For stationary testbed motor
 
-      public static final double kPositionConversionFactorRel =
-          360; // Motor Rotation to Pivot Deg
-      public static final double kVelocityConversionFactorRel =
-          360; // Motor RPM to Pivot Deg/min
+      public static final double kPositionConversionFactorRel = 360 / 16; // Motor Rotation to Pivot Deg
+      public static final double kVelocityConversionFactorRel = 360; // Motor RPM to Pivot Deg/min
 
       public static final double kPositionConversionFactorAbs =
-          360; // Encoder rotation to Pivot Deg
+          360 / 16; // Encoder rotation to Pivot Deg
       public static final double kVelocityConversionFactorAbs = 360; // Encoder RPM to Pivot Deg/min
 
       public static final NeutralModeValue kIdleMode = NeutralModeValue.Brake;

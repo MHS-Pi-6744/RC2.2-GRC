@@ -142,6 +142,8 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "Pivot Down", m_pivot.setTargetPosition(PivotSetPoints.kEndPosition));
     NamedCommands.registerCommand(
+        "Pivot Middle", m_pivot.setTargetPosition(PivotSetPoints.kMiddlePosition));
+    NamedCommands.registerCommand(
         "Pivot Up", m_pivot.setTargetPosition(PivotSetPoints.kStartPosition));
     // NamedCommands.registerCommand("Pivot Dump", m_feeder_stop);
     NamedCommands.registerCommand("Intake Forwards", m_intake.runMotor(1));
