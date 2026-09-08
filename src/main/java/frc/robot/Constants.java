@@ -54,13 +54,13 @@ public final class Constants {
      * @apiNote Talon FXS -
      * @apiNote This is the Pivot Motor of Intake Can ID
      */
-    public static final int kPivotMotorCanId = 0;
+    public static final int kPivotMotorCanId = 25;
 
     /**
      * @apiNote CANcoder -
      * @apiNote This is the AbsEncoder for the Pivot Can ID
      */
-    public static final int kAbsEncoderCanId = 1;
+    public static final int kAbsEncoderCanId = 26;
 
     /**
      * @apiNote SPARKmax -
