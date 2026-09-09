@@ -3,6 +3,7 @@ package frc.robot.motor_ctl;
 import com.ctre.phoenix6.configs.TalonFXSConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFXS;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -42,6 +43,10 @@ public class TalonFXSMotorController extends SubsystemBase {
   public Command M_Move(double output) {
     return runOnce(() -> motor.setControl(new DutyCycleOut(output)));
   }
+
+  public Command M_magic(double position) {
+    return runOnce(() -> motor.setControl(new MotionMagicDutyCycle(position)));
+  } 
 
   public Command clearFaults() {
     return runOnce(() -> motor.clearStickyFaults());

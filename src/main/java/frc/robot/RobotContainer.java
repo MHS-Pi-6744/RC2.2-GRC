@@ -262,9 +262,9 @@ public class RobotContainer {
         .whileFalse(m_intake.stopMotor());
     m_driverController
         .rightBumper()
-        .onTrue(m_pivot.setTargetPosition(PivotSetPoints.kStartPosition));
-    m_driverController.a().onTrue(m_pivot.setTargetPosition(PivotSetPoints.kMiddlePosition));
-    m_driverController.leftBumper().onTrue(m_pivot.setTargetPosition(PivotSetPoints.kEndPosition));
+        .onTrue(m_pivot.setTargetMagic(PivotSetPoints.kStartPosition));
+    m_driverController.a().onTrue(m_pivot.setTargetMagic(PivotSetPoints.kMiddlePosition));
+    m_driverController.leftBumper().onTrue(m_pivot.setTargetMagic(PivotSetPoints.kEndPosition));
   }
 
   /**

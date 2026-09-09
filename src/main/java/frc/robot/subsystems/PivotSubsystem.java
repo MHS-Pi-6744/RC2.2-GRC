@@ -24,6 +24,10 @@ public class PivotSubsystem extends SubsystemBase {
     return runOnce(() -> controller.M_Move(pos / PivotSetPoints.kPositionConversionFactorAbs));
   }
 
+  public Command setTargetMagic(double pos) {
+    return runOnce(() -> controller.M_magic(pos / PivotSetPoints.kPositionConversionFactorAbs));
+  }
+
   public Command clearFaults() {
     return runOnce(() -> controller.clearFaults());
   }
