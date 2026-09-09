@@ -33,6 +33,7 @@ import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.canIDs;
 // Subsystems
 import frc.robot.motor_ctl.MotorController;
+import frc.robot.motor_ctl.TalonFXSMotorController;
 // Constants
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
@@ -51,7 +52,7 @@ public class RobotContainer {
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   // private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final Vision vision = new Vision(m_robotDrive::addVisionMeasurement);
-  private final PivotSubsystem m_pivot = new PivotSubsystem();
+  private final TalonFXSMotorController m_pivot = new TalonFXSMotorController(Constants.canIDs.kPivotMotorCanId, Configs.IntakeConfigs.pivotConfig);
   private final MotorController m_intake =
       new MotorController(canIDs.kIntakeMotorCanId, IntakeConfigs.intakeConfig);
   private final ShooterSubsystem m_shooter = new ShooterSubsystem(this::getDistanceToTeamHub);
@@ -140,12 +141,12 @@ public class RobotContainer {
     NamedCommands.registerCommand("Flywheel Stop", m_shooter.stopFlywheel());
     NamedCommands.registerCommand("Feeder Go", m_feeder_run);
     NamedCommands.registerCommand("Feeder Stop", m_feeder_stop);
-    NamedCommands.registerCommand(
+   /*  NamedCommands.registerCommand(
         "Pivot Down", m_pivot.setTargetPosition(PivotSetPoints.kEndPosition));
     NamedCommands.registerCommand(
         "Pivot Middle", m_pivot.setTargetPosition(PivotSetPoints.kMiddlePosition));
     NamedCommands.registerCommand(
-        "Pivot Up", m_pivot.setTargetPosition(PivotSetPoints.kStartPosition));
+        "Pivot Up", m_pivot.setTargetPosition(PivotSetPoints.kStartPosition)); */
     // NamedCommands.registerCommand("Pivot Dump", m_feeder_stop);
     NamedCommands.registerCommand("Intake Forwards", m_intake.runMotor(1));
     NamedCommands.registerCommand("Intake Backwards", m_intake.runMotor(-1));
@@ -262,9 +263,9 @@ public class RobotContainer {
         .whileFalse(m_intake.stopMotor());
     m_driverController
         .rightBumper()
-        .onTrue(m_pivot.setTargetMagic(PivotSetPoints.kStartPosition));
-    m_driverController.a().onTrue(m_pivot.setTargetMagic(PivotSetPoints.kMiddlePosition));
-    m_driverController.leftBumper().onTrue(m_pivot.setTargetMagic(PivotSetPoints.kEndPosition));
+        .onTrue(m_pivot.M_magic(PivotSetPoints.kStartPosition / PivotSetPoints.kPositionConversionFactorAbs));
+    m_driverController.a().onTrue(m_pivot.M_magic(PivotSetPoints.kMiddlePosition / PivotSetPoints.kPositionConversionFactorAbs));
+    m_driverController.leftBumper().onTrue(m_pivot.M_magic(PivotSetPoints.kEndPosition / PivotSetPoints.kPositionConversionFactorAbs));
   }
 
   /**
