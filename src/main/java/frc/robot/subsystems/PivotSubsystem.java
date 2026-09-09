@@ -13,7 +13,7 @@ public class PivotSubsystem extends SubsystemBase {
       new TalonFXSMotorController(canIDs.kPivotMotorCanId, IntakeConfigs.pivotConfig);
 
   public PivotSubsystem() {
-    setTargetPosition(PivotSetPoints.kStartPosition);
+    setTargetPosition(PivotSetPoints.kStartPosition / PivotSetPoints.kPositionConversionFactorAbs);
   }
 
   /*

@@ -10,6 +10,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class TalonFXSMotorController extends SubsystemBase {
   public static TalonFXS motor;
 
+  /**
+   * @apiNote Use this to Configurate CTRE TalonFXS 
+   * @param canID
+   * @param config
+   */
   public TalonFXSMotorController(int canID, TalonFXSConfiguration config) {
     System.out.println("Talon Subsystem Initialized");
     motor = new TalonFXS(canID);

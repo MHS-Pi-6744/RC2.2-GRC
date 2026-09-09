@@ -108,7 +108,7 @@ public final class Configs {
       motionMagicConfigs.MotionMagicAcceleration = 160;
       motionMagicConfigs.MotionMagicJerk = 200;
 
-      pivotConfig.ExternalFeedback.withRemoteCANcoder(new CANcoder(1));
+      pivotConfig.ExternalFeedback.withRemoteCANcoder(new CANcoder(Constants.canIDs.kAbsEncoderCanId));
 
       pivotConfig.Commutation.MotorArrangement = MotorArrangementValue.NEO_JST;
     }

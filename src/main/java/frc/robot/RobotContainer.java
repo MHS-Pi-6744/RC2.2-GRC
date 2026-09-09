@@ -135,6 +135,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
+    // NamedCommands are for sending commands to pathplanner to be used during auto
     NamedCommands.registerCommand("Flywheel Go", m_shooter.smartShootCommand());
     NamedCommands.registerCommand("Flywheel Stop", m_shooter.stopFlywheel());
     NamedCommands.registerCommand("Feeder Go", m_feeder_run);
