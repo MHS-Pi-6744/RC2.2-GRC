@@ -13,10 +13,11 @@ public class PivotSubsystem extends SubsystemBase {
       new TalonFXSMotorController(canIDs.kPivotMotorCanId, IntakeConfigs.pivotConfig);
 
   public PivotSubsystem() {
+    System.out.println("PivotSubsystem Method Initialized");
     setTargetPosition(PivotSetPoints.kStartPosition / PivotSetPoints.kPositionConversionFactorAbs);
   }
 
-  /*
+  /**
    * @apiNote this uses Deg
    */
   public Command setTargetPosition(double pos) {
@@ -31,5 +32,12 @@ public class PivotSubsystem extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("Pivot/" + "Motor Velocity", controller.getVelocity());
     SmartDashboard.putNumber("Pivot/" + "Motor Position", controller.getPosition());
+    // Using the Conversion Factor to display a number that is relative to the actual robot position
+    SmartDashboard.putNumber(
+        "Pivot/" + "Motor Velocity Scaled",
+        controller.getVelocity() * PivotSetPoints.kPositionConversionFactorAbs);
+    SmartDashboard.putNumber(
+        "Pivot/" + "Motor Position Scaled",
+        controller.getPosition() * PivotSetPoints.kPositionConversionFactorAbs);
   }
 }

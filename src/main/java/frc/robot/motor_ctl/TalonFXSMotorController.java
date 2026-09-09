@@ -11,7 +11,7 @@ public class TalonFXSMotorController extends SubsystemBase {
   public static TalonFXS motor;
 
   /**
-   * @apiNote Use this to Configurate CTRE TalonFXS 
+   * @apiNote Use this to Configurate CTRE TalonFXS
    * @param canID
    * @param config
    */
