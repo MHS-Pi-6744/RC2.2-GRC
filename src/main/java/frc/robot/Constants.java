@@ -76,13 +76,13 @@ public final class Constants {
     /**
      * @apiNote The Command for setting the motor speed
      */
-    public static final double kIntakeSpeed = 1; // Intake speed Units are percentage
+    public static final double kIntakeSpeed = 0.8; // Intake speed Units are percentage
 
     public static final class PivotSetPoints {
 
       public static final double kStartPosition = 7; // to stay away from zero encoder reading
       public static final double kMiddlePosition = 40;
-      public static final double kEndPosition = 93.3;
+      public static final double kEndPosition = 96.3;
 
       public static final int kCurrentLimit = 40;
 
