@@ -140,12 +140,12 @@ public class RobotContainer {
     NamedCommands.registerCommand("Flywheel Stop", m_shooter.stopFlywheel());
     NamedCommands.registerCommand("Feeder Go", m_feeder_run);
     NamedCommands.registerCommand("Feeder Stop", m_feeder_stop);
-   /*  NamedCommands.registerCommand(
-        "Pivot Down", m_pivot.setTargetPosition(PivotSetPoints.kEndPosition));
     NamedCommands.registerCommand(
-        "Pivot Middle", m_pivot.setTargetPosition(PivotSetPoints.kMiddlePosition));
+        "Pivot Down", m_pivot.M_magic(PivotSetPoints.kEndPosition / PivotSetPoints.kPositionConversionFactorAbs));
     NamedCommands.registerCommand(
-        "Pivot Up", m_pivot.setTargetPosition(PivotSetPoints.kStartPosition)); */
+        "Pivot Middle", m_pivot.M_magic(PivotSetPoints.kMiddlePosition / PivotSetPoints.kPositionConversionFactorAbs));
+    NamedCommands.registerCommand(
+        "Pivot Up", m_pivot.M_magic(PivotSetPoints.kStartPosition / PivotSetPoints.kPositionConversionFactorAbs)); 
     // NamedCommands.registerCommand("Pivot Dump", m_feeder_stop);
     NamedCommands.registerCommand("Intake Forwards", m_intake.runMotor(1));
     NamedCommands.registerCommand("Intake Backwards", m_intake.runMotor(-1));
