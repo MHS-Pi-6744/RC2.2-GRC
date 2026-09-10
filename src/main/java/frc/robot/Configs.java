@@ -104,8 +104,8 @@ public final class Configs {
       slot0Configs.kD = 0.0;
 
       var motionMagicConfigs = pivotConfig.MotionMagic;
-      motionMagicConfigs.MotionMagicCruiseVelocity = 160;
-      motionMagicConfigs.MotionMagicAcceleration = 160;
+      motionMagicConfigs.MotionMagicCruiseVelocity = 220;
+      motionMagicConfigs.MotionMagicAcceleration = 180;
       motionMagicConfigs.MotionMagicJerk = 200;
 
       pivotConfig.ExternalFeedback.withRemoteCANcoder(
