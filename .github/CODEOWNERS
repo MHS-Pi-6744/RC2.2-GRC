@@ -9,6 +9,8 @@
 /src/main/java/frc/robot/motor_ctl/Flywheel.java @MattheDev53
 
 /src/main/java/frc/robot/subsystems/IntakeSubsystem.java @UnderTheBedStudios
+/src/main/java/frc/robot/subsystems/PivotSubsystem.java @UnderTheBedStudios
+/src/main/java/frc/robot/motor_ctl/TalonFXSMotorController.java @UnderTheBedStudios @Lupeydev
 /src/main/java/frc/robot/subsystems/ShooterSubsystem.java @Lupeydev
 /src/main/java/frc/robot/subsystems/FeederSubsystem.java @Lupeydev
 

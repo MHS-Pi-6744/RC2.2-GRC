@@ -4,9 +4,9 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.path.PathConstraints;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.Matrix;
@@ -51,10 +51,16 @@ public final class Constants {
     public static final int kIntakeMotorCanId = 13;
 
     /**
-     * @apiNote SPARKmax -
+     * @apiNote Talon FXS -
      * @apiNote This is the Pivot Motor of Intake Can ID
      */
-    public static final int kPivotMotorCanId = 14;
+    public static final int kPivotMotorCanId = 25;
+
+    /**
+     * @apiNote CANcoder -
+     * @apiNote This is the AbsEncoder for the Pivot Can ID
+     */
+    public static final int kAbsEncoderCanId = 26;
 
     /**
      * @apiNote SPARKmax -
@@ -70,37 +76,27 @@ public final class Constants {
     /**
      * @apiNote The Command for setting the motor speed
      */
-    public static final double kIntakeSpeed = 1; // Intake speed Units are percentage
+    public static final double kIntakeSpeed = 0.8; // Intake speed Units are percentage
 
     public static final class PivotSetPoints {
 
       public static final double kStartPosition = 7; // to stay away from zero encoder reading
       public static final double kMiddlePosition = 40;
-      public static final double kEndPosition = 103;
+      public static final double kEndPosition = 96.3;
 
       public static final int kCurrentLimit = 40;
 
       public static final double kZeroOffest = .686; // units? For stationary testbed motor
 
       public static final double kPositionConversionFactorRel =
-          360 / 40.91; // Motor Rotation to Pivot Deg
-      public static final double kVelocityConversionFactorRel =
-          360 / 40.91; // Motor RPM to Pivot Deg/min
+          360 / 16; // Motor Rotation to Pivot Deg
+      public static final double kVelocityConversionFactorRel = 360; // Motor RPM to Pivot Deg/min
 
       public static final double kPositionConversionFactorAbs =
           360; // Encoder rotation to Pivot Deg
       public static final double kVelocityConversionFactorAbs = 360; // Encoder RPM to Pivot Deg/min
 
-      public static final IdleMode kIdleMode = IdleMode.kCoast;
-
-      public static final double kMaxVelocity = 24000; // degrees per min
-      public static final double kMaxAcceleration = 16200; // Units deg/min/sec
-      public static final double kPositionTolerance = 25; // Units deg
-
-      // PID gains ======== Will need to be tuned when operating on the climber -Sr
-      public static final double kP = 0.00750000;
-      public static final double kI = 0.00000000;
-      public static final double kD = 0.00000000;
+      public static final NeutralModeValue kIdleMode = NeutralModeValue.Brake;
 
       // MAYBE LATER!
       // The pivot is expected to have hard stops

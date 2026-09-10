@@ -33,9 +33,9 @@ import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.canIDs;
 // Subsystems
 import frc.robot.motor_ctl.MotorController;
+import frc.robot.motor_ctl.TalonFXSMotorController;
 // Constants
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 // import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.Vision;
@@ -51,7 +51,7 @@ public class RobotContainer {
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   // private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final Vision vision = new Vision(m_robotDrive::addVisionMeasurement);
-  private final PivotSubsystem m_pivot = new PivotSubsystem();
+  private final TalonFXSMotorController m_pivot = new TalonFXSMotorController(Constants.canIDs.kPivotMotorCanId, Configs.IntakeConfigs.pivotConfig);
   private final MotorController m_intake =
       new MotorController(canIDs.kIntakeMotorCanId, IntakeConfigs.intakeConfig);
   private final ShooterSubsystem m_shooter = new ShooterSubsystem(this::getDistanceToTeamHub);
@@ -135,14 +135,17 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
+    // NamedCommands are for sending commands to pathplanner to be used during auto
     NamedCommands.registerCommand("Flywheel Go", m_shooter.smartShootCommand());
     NamedCommands.registerCommand("Flywheel Stop", m_shooter.stopFlywheel());
     NamedCommands.registerCommand("Feeder Go", m_feeder_run);
     NamedCommands.registerCommand("Feeder Stop", m_feeder_stop);
     NamedCommands.registerCommand(
-        "Pivot Down", m_pivot.setTargetPosition(PivotSetPoints.kEndPosition));
+        "Pivot Down", m_pivot.M_magic(PivotSetPoints.kEndPosition / PivotSetPoints.kPositionConversionFactorAbs));
     NamedCommands.registerCommand(
-        "Pivot Up", m_pivot.setTargetPosition(PivotSetPoints.kStartPosition));
+        "Pivot Middle", m_pivot.M_magic(PivotSetPoints.kMiddlePosition / PivotSetPoints.kPositionConversionFactorAbs));
+    NamedCommands.registerCommand(
+        "Pivot Up", m_pivot.M_magic(PivotSetPoints.kStartPosition / PivotSetPoints.kPositionConversionFactorAbs)); 
     // NamedCommands.registerCommand("Pivot Dump", m_feeder_stop);
     NamedCommands.registerCommand("Intake Forwards", m_intake.runMotor(1));
     NamedCommands.registerCommand("Intake Backwards", m_intake.runMotor(-1));
@@ -259,9 +262,9 @@ public class RobotContainer {
         .whileFalse(m_intake.stopMotor());
     m_driverController
         .rightBumper()
-        .onTrue(m_pivot.setTargetPosition(PivotSetPoints.kStartPosition));
-    m_driverController.a().onTrue(m_pivot.setTargetPosition(PivotSetPoints.kMiddlePosition));
-    m_driverController.leftBumper().onTrue(m_pivot.setTargetPosition(PivotSetPoints.kEndPosition));
+        .onTrue(m_pivot.M_magic(PivotSetPoints.kStartPosition / PivotSetPoints.kPositionConversionFactorAbs));
+    m_driverController.a().onTrue(m_pivot.M_magic(PivotSetPoints.kMiddlePosition / PivotSetPoints.kPositionConversionFactorAbs));
+    m_driverController.leftBumper().onTrue(m_pivot.M_magic(PivotSetPoints.kEndPosition / PivotSetPoints.kPositionConversionFactorAbs));
   }
 
   /**
